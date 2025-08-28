@@ -4,133 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Today's News</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
-    }
-    header {
-      background: #111;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 15px;
-    }
-    .news-section {
-      background: #fff;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      height: 100vh;
-      overflow-y: auto;
-    }
-    .news-section h2 {
-      text-align: center;
-      margin-bottom: 15px;
-      background: #222;
-      color: white;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    .news-card {
-      background: #fafafa;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .news-card img {
-      width: 100%;
-      border-radius: 6px;
-    }
-    .news-card h3 {
-      font-size: 16px;
-      margin: 10px 0;
-    }
-    .news-card p {
-      font-size: 14px;
-      color: #333;
-    }
-    .news-card a {
-      display: inline-block;
-      margin-top: 8px;
-      color: blue;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>📰 Today's News</header>
-  
-  <div class="container">
-    <!-- India News -->
-    <div class="news-section">
-      <h2>🇮🇳 India News</h2>
-      <div id="india-news">Loading India news...</div>
+  <header>
+    <h1>📰 Today's News</h1>
+  </header>
+
+  <main>
+    <div class="news-container">
+      <!-- India News -->
+      <section class="news-box">
+        <h2>🇮🇳 India News</h2>
+        <div id="india-news">Loading India news...</div>
+      </section>
+
+      <!-- World News -->
+      <section class="news-box">
+        <h2>🌍 World News</h2>
+        <div id="world-news">Loading world news...</div>
+      </section>
     </div>
+  </main>
 
-    <!-- World News -->
-    <div class="news-section">
-      <h2>🌍 World News</h2>
-      <div id="world-news">Loading world news...</div>
-    </div>
-  </div>
-
-  <script>
-    const apiKey = "266354cbf5cc4fe5bf3f221b1b43973a";
-    
-    // API URLs
-    const indiaUrl = `https://newsapi.org/v2/top-headlines?country=in&pageSize=10&apiKey=${apiKey}`;
-    const worldUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=10&apiKey=${apiKey}`;
-    
-    // Proxy to bypass CORS
-    function withProxy(url) {
-      return "https://api.allorigins.win/get?url=" + encodeURIComponent(url);
-    }
-
-    // Function to fetch and display news
-    async function fetchNews(url, containerId) {
-      try {
-        const res = await fetch(withProxy(url));
-        const data = await res.json();
-        const news = JSON.parse(data.contents);
-        
-        const container = document.getElementById(containerId);
-        container.innerHTML = "";
-
-        if (!news.articles || news.articles.length === 0) {
-          container.innerHTML = "<p>No news available right now.</p>";
-          return;
-        }
-
-        news.articles.forEach(article => {
-          const card = document.createElement("div");
-          card.className = "news-card";
-          card.innerHTML = `
-            <img src="${article.urlToImage || 'https://via.placeholder.com/300'}" alt="news">
-            <h3>${article.title}</h3>
-            <p>${article.description || ''}</p>
-            <a href="${article.url}" target="_blank">Read more</a>
-          `;
-          container.appendChild(card);
-        });
-      } catch (error) {
-        console.error("Error fetching news:", error);
-        document.getElementById(containerId).innerHTML = "<p>Failed to load news.</p>";
-      }
-    }
-
-    // Load both sections
-    fetchNews(indiaUrl, "india-news");
-    fetchNews(worldUrl, "world-news");
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
