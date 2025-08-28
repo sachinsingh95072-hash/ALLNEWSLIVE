@@ -5,7 +5,7 @@ const worldNewsFeed = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en";
 // Free RSS-to-JSON API
 const rssToJson = "https://api.rss2json.com/v1/api.json?rss_url=";
 
-// Function to load news
+// Load News Function
 async function loadNews(feedUrl, containerId) {
   try {
     const response = await fetch(rssToJson + encodeURIComponent(feedUrl));
@@ -19,34 +19,32 @@ async function loadNews(feedUrl, containerId) {
         const div = document.createElement("div");
         div.className = "news-item";
 
-        const imgSrc = item.enclosure?.link || item.thumbnail || "https://via.placeholder.com/120x80?text=News";
+        const imgSrc = item.enclosure?.link || item.thumbnail || "https://via.placeholder.com/100x70?text=News";
 
         div.innerHTML = `
           <img src="${imgSrc}" alt="news">
-          <div class="news-content">
-            <a href="${item.link}" target="_blank">${item.title}</a>
-            <p>${new Date(item.pubDate).toLocaleString()}</p>
-          </div>
+          <a href="${item.link}" target="_blank">${item.title}</a>
         `;
-
         container.appendChild(div);
       });
     } else {
-      container.innerHTML = "<p>No news available right now.</p>";
+      container.innerHTML = "No news available right now.";
     }
   } catch (error) {
-    console.error("Error loading news:", error);
+    document.getElementById(containerId).innerHTML = "⚠️ Error loading news.";
   }
 }
 
-// Function to refresh both feeds
+// Refresh News
 function refreshNews() {
   loadNews(indiaNewsFeed, "india-news");
   loadNews(worldNewsFeed, "world-news");
+  document.getElementById("last-updated").innerText =
+    "Last updated at: " + new Date().toLocaleTimeString();
 }
 
-// Load immediately on page open
+// First Load
 refreshNews();
 
-// Refresh every 2 minutes (120,000 ms)
-setInterval(refreshNews, 120000);
+// Auto-refresh every 2 minutes
+setInterval(refreshNews, 2 * 60 * 1000);
