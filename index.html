@@ -3,53 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📰 All News Live – India & World Updates</title>
-  <link rel="stylesheet" href="style.css">
+  <title>All News Live</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Mercator-projection.jpg/1280px-Mercator-projection.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      margin: 20px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #FFD700;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    footer a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    footer img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    }
+
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+  </style>
+  <script>
+    function refreshPage() {
+      location.reload();
+    }
+    setInterval(refreshPage, 120000); // Refresh every 2 minutes
+  </script>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav>
-    <div class="logo">📰 All News Live</div>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#india-news">India</a></li>
-      <li><a href="#world-news">World</a></li>
-    </ul>
-  </nav>
-
-  <!-- Header -->
   <header>
-    🌍 Stay Updated with the Latest India & World News
+    🌍 All News Live - Stay Updated
   </header>
 
-  <!-- Main Content -->
-  <main>
-    <!-- India News -->
-    <section>
-      <h2>🇮🇳 India News</h2>
-      <div id="india-news">Loading India news...</div>
-    </section>
+  <!-- India News -->
+  <section>
+    <h2>📰 India News</h2>
+    <iframe src="https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en" width="100%" height="300"></iframe>
+  </section>
 
-    <!-- World News -->
-    <section>
-      <h2>🌍 World News</h2>
-      <div id="world-news">Loading World news...</div>
-    </section>
-  </main>
+  <!-- World News -->
+  <section>
+    <h2>🌎 World News</h2>
+    <iframe src="https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en" width="100%" height="300"></iframe>
+  </section>
 
   <!-- Footer -->
   <footer>
-    <p>📺 Watch us on YouTube: 
-      <a href="https://www.youtube.com/@bharat1191" target="_blank">Bharat1191 Channel</a>
-    </p>
-    <p>👤 Name: <b>Sachin Singh Rajput</b></p>
-    <p>📞 Contact: 
-      <a href="tel:+919507261039"><b>+91-9507261039</b></a>
-    </p>
-    <p>© 2025 All News Live | Made with ❤️ by Sachin</p>
-  </footer>
+    <div class="footer-content">
+      <!-- Your Photo -->
+      <img src="me.jpg" alt="Sachin Singh Rajput">
 
-  <!-- Script -->
-  <script src="script.js"></script>
+      <!-- Info Text -->
+      <div>
+        <p>📺 Watch us on YouTube: 
+          <a href="https://www.youtube.com/@bharat1191" target="_blank">Bharat1191 Channel</a>
+        </p>
+        <p>👤 Name: <b>Sachin Singh Rajput</b></p>
+        <p>📞 Contact: 
+          <a href="tel:+919507261039"><b>+91-9507261039</b></a>
+        </p>
+        <p>© 2025 All News Live | Made with ❤️ by Sachin</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
