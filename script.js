@@ -1,10 +1,11 @@
-// Use RSS-to-JSON API to fetch Google News feeds
+// Google News RSS Feeds
 const indiaNewsFeed = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en";
 const worldNewsFeed = "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en";
 
-// Free RSS to JSON API (to bypass CORS issues)
+// Free RSS-to-JSON API
 const rssToJson = "https://api.rss2json.com/v1/api.json?rss_url=";
 
+// Function to load news
 async function loadNews(feedUrl, containerId) {
   try {
     const response = await fetch(rssToJson + encodeURIComponent(feedUrl));
@@ -17,20 +18,35 @@ async function loadNews(feedUrl, containerId) {
       data.items.slice(0, 6).forEach(item => {
         const div = document.createElement("div");
         div.className = "news-item";
+
+        const imgSrc = item.enclosure?.link || item.thumbnail || "https://via.placeholder.com/120x80?text=News";
+
         div.innerHTML = `
-          <a href="${item.link}" target="_blank">${item.title}</a>
-          <p>${item.pubDate}</p>
+          <img src="${imgSrc}" alt="news">
+          <div class="news-content">
+            <a href="${item.link}" target="_blank">${item.title}</a>
+            <p>${new Date(item.pubDate).toLocaleString()}</p>
+          </div>
         `;
+
         container.appendChild(div);
       });
     } else {
-      container.innerHTML = "No news available right now.";
+      container.innerHTML = "<p>No news available right now.</p>";
     }
   } catch (error) {
-    document.getElementById(containerId).innerHTML = "Error loading news.";
-    console.error(error);
+    console.error("Error loading news:", error);
   }
 }
 
-loadNews(indiaNewsFeed, "india-news");
-loadNews(worldNewsFeed, "world-news");
+// Function to refresh both feeds
+function refreshNews() {
+  loadNews(indiaNewsFeed, "india-news");
+  loadNews(worldNewsFeed, "world-news");
+}
+
+// Load immediately on page open
+refreshNews();
+
+// Refresh every 2 minutes (120,000 ms)
+setInterval(refreshNews, 120000);
